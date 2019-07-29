@@ -20,6 +20,19 @@ namespace CustomConversions
             Console.WriteLine(s.ToString());
             s.Draw();
             Console.ReadLine();
+
+            Square sq2 = (Square)90;
+            Console.WriteLine("sq2 = {0}", sq2);
+            int side = (int)sq2;
+            Console.WriteLine("Side length of sq2 = {0}", side);
+
+            Square s3 = new Square { Lenght = 7 };
+            Rectangle rect2 = s3;
+            Console.WriteLine("rect2 = {0}", rect2);
+
+            Square s4 = new Square { Lenght = 3 };
+            Rectangle rect3 = (Rectangle)s4;
+            Console.WriteLine("rect3 = {0}", rect3);
         }
     }
     public struct Rectangle
@@ -52,7 +65,7 @@ namespace CustomConversions
         public int Lenght { get; set; }
         public Square(int l) : this()
         {
-            Lenght = 1;
+            Lenght = l;
         }
         public void Draw()
         {
@@ -74,5 +87,21 @@ namespace CustomConversions
             Square s = new Square { Lenght = r.Height };
             return s;
         }
+        public static explicit operator Square(int sideLenght)
+        {
+            Square newSq = new Square { Lenght = sideLenght };
+            return newSq;
+        }
+        public static explicit operator int(Square s) => s.Lenght;
+        public static implicit operator Rectangle(Square s)
+        {
+            Rectangle r = new Rectangle
+            {
+                Height = s.Lenght,
+                Width = s.Lenght * 2
+            };
+            return r;
+        }
+
     }
 }
